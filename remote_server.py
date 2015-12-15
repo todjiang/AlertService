@@ -11,15 +11,14 @@ from wechat.enterprise import WxTextResponse
 from wechat.models import WxEmptyResponse
 
 urls = (
-  '/', 'WeChatHandler',
-  '/pp', 'PushListener'
+    '/', 'WeChatHandler',
+    '/pp', 'PushListener'
 )
 
 ISSUES = []
 
 # mock issue id for demo
 RANDOM_ISSUE_IDS = ['00015', '00016', '00017', '00018', '00019']
-
 
 with open("config.yml", 'r') as ymlfile:
     cfg = yaml.load(ymlfile)
@@ -37,14 +36,14 @@ class WxApp(WxApplication):
         self.ENCODING_AES_KEY = cfg['ENCODING_AES_KEY']
         self.CORP_ID = cfg['CORP_ID']
 
-# text event format:
-# <xml>
-# <ToUserName><![CDATA[todjiang]]></ToUserName>
-# <FromUserName><![CDATA[wx6e07daeda81c6fd3]]>
-# </FromUserName><CreateTime>1449147623</CreateTime>
-# <MsgType><![CDATA[text]]></MsgType>
-# <Content><![CDATA[ack]]></Content>
-# </xml>
+    # text event format:
+    # <xml>
+    # <ToUserName><![CDATA[todjiang]]></ToUserName>
+    # <FromUserName><![CDATA[wx6e07daeda81c6fd3]]>
+    # </FromUserName><CreateTime>1449147623</CreateTime>
+    # <MsgType><![CDATA[text]]></MsgType>
+    # <Content><![CDATA[ack]]></Content>
+    # </xml>
     def on_text(self, req):
         if req.Content.find(' ') != -1:
             msgs = req.Content.split(' ')
@@ -64,15 +63,16 @@ class WxApp(WxApplication):
             else:
                 return WxTextResponse('Unknown command', req)
 
-# click event format:
-# <xml><ToUserName><![CDATA[wx6e07daeda81c6fd3]]></ToUserName>
-# <FromUserName><![CDATA[todjiang]]></FromUserName>
-# <CreateTime>1449122502</CreateTime>
-# <MsgType><![CDATA[event]]></MsgType>
-# <AgentID>3</AgentID>
-# <Event><![CDATA[click]]></Event>
-# <EventKey><![CDATA[1]]></EventKey>
-# </xml>
+            # click event format:
+            # <xml><ToUserName><![CDATA[wx6e07daeda81c6fd3]]></ToUserName>
+            # <FromUserName><![CDATA[todjiang]]></FromUserName>
+            # <CreateTime>1449122502</CreateTime>
+            # <MsgType><![CDATA[event]]></MsgType>
+            # <AgentID>3</AgentID>
+            # <Event><![CDATA[click]]></Event>
+            # <EventKey><![CDATA[1]]></EventKey>
+            # </xml>
+
     def on_event(self, req):
         if req.EventKey == "0":
             return self.create_issue(req)
@@ -91,12 +91,10 @@ class WxApp(WxApplication):
         requests.post('http://127.0.0.1/pp', data=simplejson.dumps({'tid': req.AgentID, 'iid': random_issue_id}))
 
         return send_to_all(req, '\n'.join([req.FromUserName + ' posted an issue...', 'ID: ' + random_issue_id,
-                                 'Name: LIVE DB CONNECTION', 'Level: P0', 'Description: CONF DB down']))
+                                           'Name: LIVE DB CONNECTION', 'Level: P0', 'Description: CONF DB down']))
 
     @staticmethod
     def follow_up(req, issue_id=None):
-        print ISSUES
-
         for i in ISSUES:
             if req.AgentID == i['tid']:
                 if issue_id:
@@ -106,7 +104,8 @@ class WxApp(WxApplication):
                         return WxTextResponse('Issue ' + issue_id + ' not found', req)
                 else:
                     if len(i['issue_list']) == 1:
-                        return send_to_all(req, ' '.join(['Issue', i['issue_list'][0], 'is followed up by', req.FromUserName]))
+                        return send_to_all(req, ' '.join(
+                            ['Issue', i['issue_list'][0], 'is followed up by', req.FromUserName]))
                     elif len(i['issue_list']) > 1:
                         return WxTextResponse("Multiple issues found, please type msg format: \"ack ISSUE_ID\"", req)
                     else:
@@ -117,8 +116,6 @@ class WxApp(WxApplication):
 
     @staticmethod
     def resolve_issue(req, issue_id=None):
-        print ISSUES
-
         for i in ISSUES:
             if req.AgentID == i['tid']:
                 if issue_id:
@@ -130,7 +127,8 @@ class WxApp(WxApplication):
                 else:
                     if len(i['issue_list']) == 1:
                         ISSUES.remove(i)
-                        return send_to_all(req, ' '.join(['Issue', i['issue_list'].pop(), 'is fixed by', req.FromUserName]))
+                        return send_to_all(req,
+                                           ' '.join(['Issue', i['issue_list'].pop(), 'is fixed by', req.FromUserName]))
 
                     elif len(i['issue_list']) > 1:
                         return WxTextResponse("Multiple issues found, please type msg format: \"fix ISSUE_ID\"", req)
