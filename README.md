@@ -4,7 +4,7 @@ A simple RESTful service base on WeChat enterprise account
 基于python封装的WeChat SDK,  微信官方的sample过于简单，用别人封装好的东西， 上手会更快点。
 我使用过程中也遇到一些小小问题， 不过源码摆那， 修改一下就基本上没问题了。
 
-WeChat 官方python sample, 见目录 python
+WeChat官方python sample, 见目录 official_sample
 
 网上各种语言SDK已经很多, 我就选个python的, 见目录 wechat
 
