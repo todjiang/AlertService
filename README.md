@@ -62,3 +62,7 @@ For multiple issues, type command:
 	ack ISSUE_ID
 	fix ISSUE_ID
 ```
+
+### Screenshot 
+![Demo] (https://raw.githubusercontent.com/todjiang/AlertService/master/screenshot01.png)
+
