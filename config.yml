@@ -1,0 +1,13 @@
+REMOTE_HOST: 
+
+# team name mapping relationship with agent id
+TEAM_ID_DICT:
+    teamA: 1
+    teamB: 2
+
+CORP_ID: 
+SECRET: 
+
+SECRET_TOKEN : 
+
+ENCODING_AES_KEY: 
