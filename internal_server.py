@@ -56,7 +56,7 @@ class RaiseAlert:
         api = WxApi(cfg['CORP_ID'], cfg['SECRET'])
         api.send_text(self.build_msg(data), team_id, 0, '@all')
 
-        return "OK"
+        return web.OK('ok')
 
     @staticmethod
     def data_normalize(data):
@@ -86,7 +86,7 @@ class RaiseAlertRawText:
         api = WxApi(cfg['CORP_ID'], cfg['SECRET'])
         api.send_text(web.data(), team_id, 0, '@all')
 
-        return "OK"
+        return web.OK('ok')
 
 
 def not_found():
