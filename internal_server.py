@@ -98,9 +98,10 @@ def internal_error():
 
 
 urls = (
-  '/', 'Index',
-  '/raise_alert', 'RaiseAlert',
-  '/raise_alert_raw_text', 'RaiseAlertRawText'
+    '/', 'Index',
+    '/raise_alert', 'RaiseAlert',
+    '/raise_alert_raw_text', 'RaiseAlertRawText',
+    '/alert', 'RaiseAlertRawText'
 )
 
 

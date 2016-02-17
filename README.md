@@ -12,13 +12,15 @@ Jeff WeChat
 https://github.com/jeffkit/wechat
 
 
-使用web.py的搭建restful serivice, 原因也就是简单，上手快。
+使用web.py的搭建restful service, 原因也就是简单, 上手快
 
-如果只是想用来发消息， 只用internal_server.py的send raw data接口就行了。 如果有用到回调功能与用户互动了，那么在公网搞台机器（各种云选一个。。）
-remote server 在我这里例子里用来记录issue的跟进和解决的状态。
+如果只是想用来发消息， 只用internal_server.py的send raw data接口就行了。 如果有用到回调功能与用户互动了, 那么在公网搞台机器（各种云随便选一个。。）
+remote server 在我这里例子里用来记录issue的跟进和解决的状态, 在远程server维护一个队列存放active issue ids, 没有存放其他敏感信息.
+### Deployment Diagram
+![Deployment] (https://raw.githubusercontent.com/todjiang/AlertService/master/alert_deployment.png)
 
 ## Installation:
-ubuntu OS
+Dependency installation on Ubuntu OS
 ```
 apt-get install python-dev  
 python-dev for compile pycrypto
@@ -36,8 +38,8 @@ incoming: json validation
 HTTP Method: POST
 tid is the unique id for a team
 
-Json data sender, restrict data format:
-URL: http://localhost:8080/raise_alert?tid=test
+### Json data sender, restrict data format:
+URL: http://localhost:8080/raise_alert/?tid=test
 
 Body Content:
 ```
@@ -50,11 +52,11 @@ Body Content:
 
 ```
 
-RawData sender:
-URL: http://localhost:8080/raise_alert_raw_text?tid=test
+### RawData sender:
+URL: http://localhost:8080/alert/?tid=test
 
 
-###Issue tracking:
+## Issue tracking:
 Click “FollowUp” or “Resolved” for an existing issue, tracking issue status for a team.
 
 For multiple issues, type command:
