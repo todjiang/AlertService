@@ -9,8 +9,9 @@ https://github.com/jeffkit/wechat
 
 使用web.py的搭建restful service, 原因也就是简单, 上手快
 
-如果只是想用来发消息， 只用internal_server.py的send raw data接口就行了。 如果有用到回调功能与用户互动了, 那么在公网搞台机器（各种云随便选一个。。）
-remote server 在我这里例子里用来记录issue的跟进和解决的状态, 在远程server维护一个队列存放active issue ids, 没有存放其他敏感信息.
+如果只是想用来发消息, 只用internal_server.py的send raw data接口就行了.
+如果需要与用户互动, 用到回调功能的话, 公网到公司网络通常是连不通的(安全原因), 就需要多用一个remote_server.py, 搭建在公网云主机上（各种云随便选一个。。）
+remote_server.py 在我这里用来记录issue的跟进和解决的状态, 在远程server维护一个队列存放active issue ids, 没有存放其他敏感信息.
 
 ### Deployment Diagram
 ![Deployment] (https://raw.githubusercontent.com/todjiang/AlertService/master/alert_deployment.png)
